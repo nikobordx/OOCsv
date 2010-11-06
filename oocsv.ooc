@@ -77,12 +77,10 @@ Column : class
     }
     addField : func ~withdata (data : String)
     {
-        fields ensureCapacity(fields size+1)
         fields add(Field new(data))
     }
     addField : func ~withfield (field : Field)
     {
-        fields ensureCapacity(fields size+1)
         fields add(field)
     }
     getField : func ~withdata (fieldData : String) -> Field
@@ -107,6 +105,21 @@ Column : class
     deleteField : func ~withindex (index : Int)
     {
         fields removeAt(index)
+    }
+    getFieldIndex : func ~withfield (field : Field) -> Int
+    {
+        for(i in 0 .. fields size)
+        {
+            if(fields[i] == field)
+            {
+                return i
+            }
+        }
+        -1
+    }
+    getFieldIndex : func ~withdata (data : String) -> Int
+    {
+        getFieldIndex(getField(data))
     }
 }
 
@@ -139,7 +152,6 @@ Database : class
                 // store data to column
                 if(lineIndex == 0)
                 {
-                    columns ensureCapacity(columns size+1)
                     columns add(Column new(temp))
                 }
                 else
@@ -187,6 +199,27 @@ Database : class
         selectColumn(columnIndexFromName(columnName))
     }
     
+    selectLine : func ~withindex (lineIndex : Int) -> ArrayList<Field>
+    {
+        ret := ArrayList<Field> new()
+        for(i in 0 .. columns size)
+        {
+            ret add(selectColumn(i) selectField(lineIndex))
+        }
+        ret
+    }
+    
+    selectLine : func ~withstrings (columnName, fieldValue : String) -> ArrayList<Field>
+    {
+        selectLine(columnIndexFromName(columnName),fieldValue)
+    }
+    
+    selectLine : func ~withintandstring (columnIndex : Int, fieldValue : String) -> ArrayList<Field>
+    {
+        fieldIndex := selectColumn(columnIndex) getFieldIndex(fieldValue)
+        selectLine(fieldIndex)
+    }
+    
     deleteColumn : func ~withname (columnName : String)
     {
         deleteColumn(columnIndexFromName(columnName))
@@ -225,7 +258,6 @@ Database : class
     
     addColumn : func(column : Column)
     {
-        columns ensureCapacity(columns size+1)
         columns add(column)
     }
     // order : 0 .. 9 , A .. Z, a .. z
