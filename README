@@ -1,0 +1,10 @@
+OOCSV version 0.1
+
+OOCsv is a library that allows you to open, edit and save csv (comma separated values) files as if they were databases and all that awesomeness written in OOC =D
+Currently you can select columns/fields, change a field's/column's data, swap two columns/lines, delete a column/line/field, add a field/column/line,  sort the database
+on ascending/descending order based on the column you choose and last but not least save your database. The code is pretty messy but it was written in one day so ... :p
+See the example.ooc file that comes the library for more info about OOCsv's usage, or just look directly in oocsv.ooc library file
+You are free to use, modify and redistribute OOCsv
+
+Note: ascending and descending ordering, when they look to see if two lines need switching, first check to see if they are all numerical and thus convert the data into Int
+and do the comparison and if they are not it just compared their characters ascii codes, so order becomes 0 .. 9, A .. Z and a .. z

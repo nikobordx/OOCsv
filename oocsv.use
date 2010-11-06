@@ -1,0 +1,6 @@
+Name: OOCSV version 0.1
+Version: head
+Origin: https://github.com/shamanas/OOCsv.git
+Description: CSV databases editor, reader and saver wirtten in OOC
+SourcePath: .
+
